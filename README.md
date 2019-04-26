@@ -15,7 +15,79 @@ Perhatian: Karakter ‘/’ adalah karakter ilegal dalam penamaan file atau fold
 
 #### Jawaban :
 
+```
+static const char *dirpath = "/home/irkham/SISOP/modul4";
+```
+untuk menyimpan direktori.
 
+```
+char cipher[100] = "qE1~ YMUR2\"`hNIdPzi%^t@(Ao:=CQ,nx4S[7mHFye#aT6+v)DfKL$r?bkOGB>}!9_wV']jcp5JZ&Xl|\\8s;g<{3.u*W-0";
+```
+variable chiper[] untuk menyimpan character list yang dipakai.
+
+```
+void encrypt(char change[])
+{
+	int n;
+	for(n = 0; change[n]!= '\0'; ++n)
+	{
+		int i, ch = change[n];
+
+		if(ch == '/') continue;
+
+		int length = strlen(cipher);
+		for(i = 0; i < length; i++)
+		{
+			if(ch == cipher[i])
+			{
+				break;
+			}
+		}
+		
+		i += 17;
+		if(i > 93) 
+		i -= length;
+
+		change[n] = cipher[i];
+	}
+}
+```
+Pada fungsi **encrypt** ini akan mengecek nilai dari variable **change[]** per karakernya, jika nilainya merupakan karakter '/' maka dilanjutkan saja.
+
+Kemudian, kami melakukan looping sepanjang jumlah karakter variable **cipher[]** dan mengecek apabila variable **ch == cipher[i]** maka akan ter-break. 
+
+Lalu, nilai i akan ditambah dengan 17, dan dicek apabila nilai i menjadi lebih besar dari 93 maka akan dikurangi dengan nilai dari variable **length** atau panjang karakter dari variable **cipher**.
+Kemudian, nilai variable **change[n]** akan digantikan dengan nilai variable **cipher[i]**
+
+```
+void decrypt(char change[])
+{
+	int n;
+	for(n = 0; change[n] != '\0'; ++n)
+	{
+		int i, ch = change[n];
+
+		if(ch == '/') continue;
+
+		int length = strlen(cipher);
+		for(i = 0; i < length; i++)
+		{
+			if(ch == cipher[i])
+			{
+				break;
+			}
+		}
+		
+		i -= 17;
+		if(i < 0) 
+		i += length;
+
+		change[n] = cipher[i];
+	}
+}
+```
+
+Sama halnya dengan fungsi **encrypt** , hanya saja dalam fungsi **decrypt** ini, nilai variable **i** nya akan dikurangi dengan 17 dan jika nilainya menjadi kurang dari 0 maka akan ditambahkan dengan nilai variable **length** atau panjang karakter dari variable **cipher[]** tadi. Kemudian, nilai **change[n]** digantikan dengan nilai dari **cipher[i]**.
 
 
 
