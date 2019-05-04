@@ -164,12 +164,13 @@ Jika ditemukan file dengan spesifikasi tersebut ketika membuka direktori, Atta a
         }
 ```
 - Group Name dan Owner Name disimpan pada struct yaitu 
-``
+
+```
 	struct passwd *user;
         user = getpwuid(info.st_uid);
         struct group *grup;
         grup = getgrgid(info.st_gid);
-``
+```
 - Sedangkan, ``if( (strcmp(user->pw_name,"chipset") == 0 || strcmp(user->pw_name,"ic_controller") == 0) && strcmp(grup->gr_name,"rusak") == 0)`` berfungsi untuk mengecek apakah User dan Group Name sesuai yang diminta pada soal.
 
 
@@ -179,34 +180,38 @@ Pada folder **YOUTUBER**, setiap membuat folder permission foldernya akan otomat
 
 #### Jawaban :
 - Pada fungsi ``xmp_mkdir`` terdapat sintaks seperti dibawah ini :
-``
+
+```
 if (strstr(fpath, youtuber)){
   	res = mkdir(fpath, 0750);
   }
-``
+```
 Sintaks tersebut berfungsi untuk mendeteksi "/YOUTUBER" pada path directory dari directory yang akan dibuat, maka mode directory akan diubah menjadi 0750.
 
 - Pada fungsi ``xmp_readdir`` terdapat sintaks seperti dibawah ini :
-``
+
+```
 else if (strstr(fpath, youtuber) && de->d_type == DT_REG){
   char newPathName[1000];
   sprintf(newPathName, "%s.iz1", temp);
   res = (filler(buf, newPathName, &st, 0));
   eksekusiBahaya(fullpathname, newPathName);
 }
-``
+```
 Sintaks tersebut berfungsi untuk memeriksa jika "/YOUTUBER" yang ada di dalam path dan directory yang dibaca merupakan file biasa, maka file tersebut akan ditampilkan dengan menambahkan ekstensi tambahan **iz1**.
 
 - Pada fungsi ``xmp_create`` terdapat sintaks seperti dibawah ini :
-``
+
+```
 if (strstr(fpath, youtuber)){
   	res = creat(fpath, 0640);
   }
-``
+```
 Sintaks tersebut berfungsi untuk mengubah permission file yang dibentuk pada folder YOUTUBER menjadi 640.
 
 - Pada fungsi ``xmp_chmod`` terdapat sintaks seperti dibawah ini :
-``
+
+```
 static int xmp_chmod(const char *path, mode_t mode)
 {
 	int res;
@@ -232,7 +237,7 @@ static int xmp_chmod(const char *path, mode_t mode)
 
 	return 0;
 }
-``
+```
 Sintaks tersebut berfungsi untuk memunculkan pesan error **File ekstensi iz1 tidak boleh diubah permissionnya.**
 
 
@@ -242,7 +247,8 @@ Ketika mengedit suatu file dan melakukan save, maka akan terbuat folder baru ber
 
 #### Jawaban :
 - Tambahkan sintaks untuk folder **Backup** pada fungsi ``xmp_write``.
-``
+
+```
 static int xmp_write(const char *path, const char *buf, size_t size, off_t offset, struct fuse_file_info *fi)
 {
 	int fd;
@@ -315,25 +321,28 @@ static int xmp_write(const char *path, const char *buf, size_t size, off_t offse
 	
 	return res;
 }
-``
+```
 Sintaks tambahan untuk pembuatan folder **Backup** sendiri berada pada sintaks dibawah ini :
-``
+
+```
 	char fd_backup[1000]="/home/irkham/SISOP/modul4/XB.Jhu";
 	mkdir(fd_backup, 0777);
-``
+```
 
 - File yang ingin dimasukkan ke dalam folder **Backup** pun harus memiliki tambahan waktu dan tanggal dibelakangnya (timestamp) sesuai soal.
-``
+
+```
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
 	sprintf(waktu, "%04d-%02d-%02d_%02d:%02d:%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-``
+```
 
 - Untuk folder **Recycle Bin**, edit dan tambahkan sintaks pada fungsi ``xmp_unlink`` dengan sintaks dibawah ini :
-``
-	char fd_recyclebin[100]="/home/jihan/shift4/oO.k.EOX[)";
+
+```
+	char fd_recyclebin[100]="/home/irkham/SISOP/modul4/oO.k.EOX[)";
 	mkdir(fd_recyclebin, 0777);
-``
+```
 
 
 
