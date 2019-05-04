@@ -296,9 +296,9 @@ static int xmp_write(const char *path, const char *buf, size_t size, off_t offse
 	else{
 		strcpy(ext, path+posisi_ext);
 	}
-	int posisi_slash = posisi(path, '/');
-	int dot = posisi_ext-(posisi_slash+1);
-	strncpy(namafile, path+1+posisi_slash, dot);
+	int p_garing = posisi(path, '/');
+	int titik = posisi_ext-(p_garing+1);
+	strncpy(namafile, path+1+p_garing, titik);
 	namafile[dot] = '\0';
 	
 	time_t t = time(NULL);
